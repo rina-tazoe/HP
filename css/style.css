@@ -1,0 +1,379 @@
+/* css/style.css */
+
+/* ------------------------------------- */
+/* 基本設定 */
+/* ------------------------------------- */
+body {
+    margin: 0;
+    font-family: 'Times New Roman', serif;
+
+    background-color: #262626;
+    color: #f0f0f0;
+}
+
+.hidden {
+    display: none;
+}
+
+/* ------------------------------------- */
+/* 固定背景のスタイル */
+/* ------------------------------------- */
+#fixed-background {
+    position: fixed;
+    /* 画面に固定 */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    /* 他のコンテンツの下に配置 */
+
+    /* 背景画像の設定 */
+    background-image: url('../images/coin_background.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: grayscale(100%);
+    /* 白黒フィルター */
+
+    background-color: #1a1a1a;
+}
+
+
+/* ------------------------------------- */
+/* ローディングアニメーション部分 */
+/* ------------------------------------- */
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1a1a1a;
+    z-index: 9999;
+    transition: opacity 0.5s ease-out;
+}
+
+.image-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.hero-image {
+    position: absolute;
+    width: 35vw;
+    height: 35vh;
+    object-fit: cover;
+    filter: grayscale(100%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0;
+    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* 重なり順の指定 */
+#img1 {
+    z-index: 3;
+}
+
+#img2 {
+    z-index: 2;
+}
+
+#img3 {
+    z-index: 1;
+    object-position: 50% 40%;
+}
+
+/* --- アニメーション後の状態（広がる、消える） --- */
+.image-container.active #img1,
+.image-container.active #img2,
+.image-container.active #img3 {
+    transition: all 1.0s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.image-container.active #img1 {
+    transform: translate(-200%, -200%) scale(2.0) rotate(-20deg);
+    opacity: 0;
+}
+
+.image-container.active #img2 {
+    transform: translate(-50%, 200%) scale(1.5);
+    opacity: 0;
+}
+
+.image-container.active #img3 {
+    transform: translate(100%, -200%) scale(2.0) rotate(20deg);
+    opacity: 0;
+}
+
+/* ------------------------------------- */
+/* メインコンテンツのデザイン */
+/* ------------------------------------- */
+main {
+    padding: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-section {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 200px 20px 0 20px;
+
+    background-image: none;
+    background-color: transparent;
+    filter: none;
+
+    color: white;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 1);
+}
+
+.hero-section h1 {
+    text-align: center;
+    /* テキストを中央寄せにする */
+    font-size: 4.5em;
+    margin-bottom: 20px;
+    letter-spacing: 0.1em;
+    color: inherit;
+    max-width: 800px;
+}
+
+/* 改行防止のクラス */
+.hero-section h1 .no-break {
+    white-space: nowrap;
+}
+
+.hero-section p {
+    text-align: center;
+    /* 説明文も中央寄せにする */
+    font-size: 1.5em;
+    color: inherit;
+}
+
+
+/* --- コンテンツセクションの共通スタイル --- */
+.purchase-info,
+.gallery-section {
+    max-width: 800px;
+    margin: 60px auto;
+    padding: 50px 30px;
+
+    background-color: #1a1a1a;
+    border-radius: 4px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+
+    text-align: center;
+
+    /* セクション全体のアニメーション初期状態 */
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+/* スクロールアニメーションのアクティブ状態 */
+.fade-in-section.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* --- 特徴セクション (feature-section) のスタイル --- */
+.feature-section {
+    /* セクション全体は透明な背景で固定背景を見せる */
+    background-color: transparent;
+    padding: 0;
+    /* パディングをリセット */
+    margin: 60px auto;
+    max-width: 900px;
+    /* アイテム全体の最大幅を少し広げる */
+}
+
+.feature-section h2,
+.gallery-section h2 {
+    font-size: 2.5em;
+    margin-bottom: 40px;
+    text-align: center;
+    /* feature-sectionのH2にはアニメーションを適用しないため、背景透過 */
+    background-color: #1a1a1a;
+    padding: 10px 0;
+    max-width: 800px;
+    margin: 0 auto 40px auto;
+    border-radius: 4px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+}
+
+.feature-list {
+    display: block;
+    padding: 0;
+}
+
+
+
+/* ★★★ 特徴アイテム（画像＋テキスト）の左右スライドアニメーション ★★★ */
+
+/* アイテムコンテナ */
+.feature-item {
+    background-color: transparent;
+    padding: 0;
+    margin: 80px auto;
+    border-radius: 4px;
+    box-shadow: none;
+    overflow: hidden;
+    max-width: 100%;
+}
+
+/* 画像とテキストを左右に並べるコンテナ */
+.item-with-media {
+    display: flex;
+    align-items: center;
+    /* 垂直方向の中央揃え */
+    gap: 40px;
+    /* 画像とテキストの間のスペース */
+    max-width: 900px;
+    margin: 0 auto;
+    /* 中央揃え */
+}
+
+.feature-media,
+.feature-text {
+    flex: 1;
+    min-width: 0;
+
+    /* アニメーション時間を控えめに (1.2s -> 0.8s) */
+    opacity: 0;
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.feature-media img {
+    width: 100%;
+    height: 300px;
+    /* 縦幅は 300px を維持 */
+
+    object-fit: cover;
+    /* object-fit: cover をデフォルトとして維持 */
+
+    display: block;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    /* 影は残す */
+    /* グレースケールフィルターを適用 (少しだけ白黒っぽく 50%) */
+    filter: grayscale(50%);
+}
+
+/* 最初の feature-item の画像に適用される特殊な位置調整 */
+.feature-list .media-left:nth-child(1) .feature-media img {
+    object-position: 10% 58%;
+}
+
+
+
+.feature-text {
+    padding: 20px;
+    /* 背景色と影を削除/透明化し、固定背景が見えるようにする */
+    background-color: transparent;
+    box-shadow: none;
+    /* ★修正点1: text-shadowを削除 (文字色を黒くするため) */
+    text-shadow: none;
+    text-align: left;
+}
+
+.feature-text h3 {
+    /* ★修正点2: 文字色を黒に変更 */
+    color: #1a1a1a;
+    font-size: 2em;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.feature-text p {
+    /* ★修正点3: 文字色を黒に変更 */
+    color: #1a1a1a;
+    text-align: left;
+}
+
+
+/* is-visible でアクティブ状態 */
+.feature-item.is-visible .feature-text,
+.feature-item.is-visible .feature-media {
+    opacity: 1;
+    transform: translateX(0);
+    /* 元の位置へ */
+}
+
+/* media-left の初期状態: メディアは左から、テキストは右から */
+.media-left .feature-media {
+    transform: translateX(-20px);
+    /* 動きの幅を小さく 20px */
+}
+
+.media-left .feature-text {
+    transform: translateX(20px);
+    /* 動きの幅を小さく 20px */
+}
+
+/* media-right の初期状態: メディアは右から、テキストは左から */
+.media-right .feature-media {
+    transform: translateX(20px);
+    /* 動きの幅を小さく 20px */
+}
+
+.media-right .feature-text {
+    transform: translateX(-20px);
+    /* 動きの幅を小さく 20px */
+}
+
+/* ★★★ 特徴アイテムアニメーションここまで ★★★ */
+
+
+/* --- ギャラリーセクションのスタイル --- */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.gallery-grid img {
+    width: 100%;
+    /* 縦幅を 200px に再設定 */
+    height: 200px;
+    object-fit: cover;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    /* カラー表示を維持 */
+    transition: transform 0.3s ease;
+}
+
+.gallery-grid img:hover {
+    transform: scale(1.03);
+}
+
+/* --- ボタンのスタイル (変更なし) --- */
+.purchase-button {
+    display: inline-block;
+    padding: 18px 40px;
+    margin-top: 30px;
+
+    background-color: #777;
+    color: #1a1a1a;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.purchase-button:hover {
+    background-color: #999;
+}
