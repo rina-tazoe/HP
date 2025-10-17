@@ -272,8 +272,9 @@ main {
     filter: grayscale(50%);
 }
 
-/* 最初の feature-item の画像に適用される特殊な位置調整 */
+/* ★ 最初の feature-item の画像のみ、位置を微調整 */
 .feature-list .media-left:nth-child(1) .feature-media img {
+    /* 画像の切れるのを最小限に抑えるため、極限まで左上へ寄せる設定を維持 */
     object-position: 10% 58%;
 }
 
@@ -284,13 +285,13 @@ main {
     /* 背景色と影を削除/透明化し、固定背景が見えるようにする */
     background-color: transparent;
     box-shadow: none;
-    /* ★修正点1: text-shadowを削除 (文字色を黒くするため) */
+    /* ★修正: text-shadowを削除 (文字色を黒くするため) */
     text-shadow: none;
     text-align: left;
 }
 
 .feature-text h3 {
-    /* ★修正点2: 文字色を黒に変更 */
+    /* ★修正: 文字色を黒に変更 */
     color: #1a1a1a;
     font-size: 2em;
     margin-bottom: 15px;
@@ -298,7 +299,7 @@ main {
 }
 
 .feature-text p {
-    /* ★修正点3: 文字色を黒に変更 */
+    /* ★修正: 文字色を黒に変更 */
     color: #1a1a1a;
     text-align: left;
 }
@@ -376,4 +377,67 @@ main {
 
 .purchase-button:hover {
     background-color: #999;
+}
+
+
+/* ------------------------------------- */
+/* メディアクエリ (スマートフォン対応) */
+/* ------------------------------------- */
+
+@media (max-width: 768px) {
+
+    /* 1. タイトルと説明文のフォントサイズを調整 */
+    .hero-section h1 {
+        font-size: 2.5em;
+        /* PCの4.5emから縮小 */
+    }
+
+    .hero-section p {
+        font-size: 1.1em;
+        /* PCの1.5emから縮小 */
+    }
+
+    /* 2. 特徴セクションの画像とテキストを縦に並べる */
+    .item-with-media {
+        flex-direction: column;
+        /* 横並びから縦並びへ変更 */
+        gap: 20px;
+        /* 縦の隙間を調整 */
+        padding: 0 20px;
+        /* 左右のパディングを追加して見やすく */
+    }
+
+    /* 3. 特徴テキストの配置を中央に戻す */
+    .feature-text {
+        text-align: center;
+        padding: 0;
+    }
+
+    .feature-text h3,
+    .feature-text p {
+        text-align: center;
+    }
+
+    /* 4. アニメーションの初期位置をリセット (縦並びのため) */
+    .media-left .feature-media,
+    .media-right .feature-media,
+    .media-left .feature-text,
+    .media-right .feature-text {
+        transform: translateY(20px);
+        /* 縦方向の下からスライドに統一 */
+    }
+
+    .feature-item.is-visible .feature-text,
+    .feature-item.is-visible .feature-media {
+        opacity: 1;
+        /* 縦並びになっても表示アニメーションは維持 */
+        transform: translateY(0);
+        /* 元の位置へ */
+    }
+
+    /* 5. ギャラリーの画像サイズを調整 */
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        /* スマホでは2列にする */
+    }
 }
